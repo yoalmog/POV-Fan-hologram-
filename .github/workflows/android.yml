@@ -11,6 +11,9 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    env:
+      NODE_VERSION: 22
+
     steps:
 
       - name: Checkout
@@ -20,6 +23,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+
+      - name: Verify Node
+        run: |
+
+          node -v
+          npm -v
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -35,6 +45,10 @@ jobs:
 
           npm install --force
 
+      - name: Remove Broken Tailwind V4
+        run: |
+
+          npm uninstall @tailwindcss/vite || true
           npm uninstall @tailwindcss/oxide || true
 
           npm install \
@@ -44,11 +58,6 @@ jobs:
           --save-dev \
           --force
 
-      - name: Disable Tailwind Oxide
-        run: |
-
-          echo "TAILWIND_DISABLE_OXIDE=true" >> $GITHUB_ENV
-
       - name: Build Web
         run: |
 
@@ -57,14 +66,13 @@ jobs:
       - name: Install Capacitor
         run: |
 
-          npm install @capacitor/core --force
-          npm install @capacitor/cli --save-dev --force
-          npm install @capacitor/android --force
+          npm install @capacitor/core@latest --force
+          npm install @capacitor/cli@latest --save-dev --force
+          npm install @capacitor/android@latest --force
 
       - name: Sync Capacitor
         run: |
-
-          npx cap sync android
+          npx cap sync
 
       - name: Force Java 17
         run: |
