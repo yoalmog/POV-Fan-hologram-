@@ -50,14 +50,18 @@ jobs:
 
           npx cap sync android
 
-      - name: Force Java 17
+            - name: Force Java 17
         run: |
 
           find android -type f -name "*.gradle" -exec sed -i \
           -e 's/VERSION_21/VERSION_17/g' \
           -e 's/JavaVersion.VERSION_21/JavaVersion.VERSION_17/g' \
+          -e 's/sourceCompatibility = 21/sourceCompatibility = 17/g' \
+          -e 's/targetCompatibility = 21/targetCompatibility = 17/g' \
+          -e 's/JavaLanguageVersion.of(21)/JavaLanguageVersion.of(17)/g' \
           {} +
 
+          echo "org.gradle.java.home=${JAVA_HOME}" >> android/gradle.properties
       - name: Build APK
         run: |
 
@@ -71,3 +75,4 @@ jobs:
         with:
           name: AETHER-APK
           path: android/app/build/outputs/apk/debug/app-debug.apk
+
