@@ -42,11 +42,12 @@ jobs:
           npm uninstall @tailwindcss/oxide || true
 
           npm install \
-          tailwindcss@3.4.13 \
-          postcss \
-          autoprefixer \
-          --save-dev \
-          --force
+tailwindcss \
+@tailwindcss/postcss \
+postcss \
+autoprefixer \
+--save-dev \
+--force
 
       - name: Build Web
         run: |
