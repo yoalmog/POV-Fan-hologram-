@@ -55,8 +55,18 @@ jobs:
           npm install @capacitor/cli --save-dev --force
           npm install @capacitor/android --force
 
+            - name: Verify Node
+        run: |
+
+          node -v
+          npm -v
+
       - name: Sync Capacitor
         run: |
+
+          export PATH=$(npm bin):$PATH
+
+          node -v
 
           npx cap sync android
 
