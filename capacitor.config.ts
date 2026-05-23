@@ -1,13 +1,9 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.povexample.controller',
-  appName: 'POV Hologram Controller',
-  webDir: 'dist',
-  server: {
-    androidScheme: 'https',
-    cleartext: true
-  }
+  appId: 'com.povfan.holo',
+  appName: 'Hologram Controller',
+  webDir: 'dist'
 };
 
 export default config;
