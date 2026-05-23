@@ -23,8 +23,11 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          rm -f package-lock.json
-          npm install --legacy-peer-deps --include=optional
+          npm install --legacy-peer-deps
+
+      - name: Force Install Linux-x64 Tailwind Native Binary
+        run: |
+          npm install @tailwindcss/oxide-linux-x64-gnu@4.1.14 --no-save
 
       - name: Build Web App (Vite)
         run: npm run build
