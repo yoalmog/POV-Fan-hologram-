@@ -42,6 +42,11 @@ jobs:
           distribution: 'zulu'
           cache: gradle
 
+      - name: Regenerate Gradle Wrapper
+        run: |
+          cd android
+          gradle wrapper --gradle-version 8.14.3 --distribution-type all
+
       - name: Make Gradle Daemon Executable
         run: chmod +x android/gradlew
 
