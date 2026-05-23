@@ -11,9 +11,6 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    env:
-      NODE_VERSION: 22
-
     steps:
 
       - name: Checkout
@@ -23,13 +20,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
-
-      - name: Verify Node
-        run: |
-
-          node -v
-          npm -v
 
       - name: Setup Java
         uses: actions/setup-java@v4
@@ -37,7 +27,7 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Clean Install
+      - name: Install Dependencies
         run: |
 
           rm -rf node_modules
@@ -45,7 +35,7 @@ jobs:
 
           npm install --force
 
-      - name: Remove Broken Tailwind V4
+      - name: Fix Tailwind
         run: |
 
           npm uninstall @tailwindcss/vite || true
@@ -63,16 +53,10 @@ jobs:
 
           npm run build
 
-      - name: Install Capacitor
-        run: |
-
-          npm install @capacitor/core@latest --force
-          npm install @capacitor/cli@latest --save-dev --force
-          npm install @capacitor/android@latest --force
-
       - name: Sync Capacitor
         run: |
-          npx cap sync
+
+          npx cap sync android
 
       - name: Force Java 17
         run: |
@@ -84,8 +68,6 @@ jobs:
           -e 's/targetCompatibility = 21/targetCompatibility = 17/g' \
           -e 's/JavaLanguageVersion.of(21)/JavaLanguageVersion.of(17)/g' \
           {} +
-
-          echo "org.gradle.java.home=${JAVA_HOME}" >> android/gradle.properties
 
       - name: Build APK
         run: |
