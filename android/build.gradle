@@ -42,3 +42,47 @@ subprojects {
     }
 
 }
+buildscript {
+
+    repositories {
+
+        google()
+        mavenCentral()
+
+    }
+
+    dependencies {
+
+        classpath 'com.android.tools.build:gradle:8.7.2'
+
+    }
+
+}
+
+allprojects {
+
+    repositories {
+
+        google()
+        mavenCentral()
+
+    }
+
+}
+
+task clean(type: Delete) {
+
+    delete rootProject.buildDir
+
+}
+
+subprojects {
+
+    tasks.withType(JavaCompile).configureEach {
+
+        sourceCompatibility = "17"
+        targetCompatibility = "17"
+
+    }
+
+}
